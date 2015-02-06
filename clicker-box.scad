@@ -41,7 +41,7 @@ module remove(){
 		cube([9,5,3],center=true);
 
 	// Charger hole
-	translate([inside_box_lenth_mm/2+2, 0, inside_Box_height_mm / 2 - 3])
+	translate([inside_box_lenth_mm/2+2, 0, inside_Box_height_mm / 2 - 3 - mount1_position_mm_z - 1])
 		cube([6,8,4], center=true);
 
 }
