@@ -30,6 +30,8 @@ mount4_position_mm_x =-10;
 mount4_position_mm_y =10;
 mount4_position_mm_z =15;
 
+lid_pin_height = 6;
+
 print=0 ;//0=both, 1=box, 2=lid
 overlay=1;//if one then shows invisible other side.
 
@@ -181,62 +183,63 @@ mount(mount4_position_mm_x,mount4_position_mm_y,mount4_position_mm_z );
 
 }
 if (print==0 || print==2){
+
 translate([0,0-outside_box_width_mm-5,outside_Box_height_mm/2-0.5]){
 //this is outside lid
 outside(outside_box_lenth_mm,outside_box_width_mm,1);
-translate([(outside_box_lenth_mm-5)/2,(outside_box_width_mm-5)/2,-2]){
+translate([(outside_box_lenth_mm-5)/2,(outside_box_width_mm-5)/2,-lid_pin_height/2]){
 rotate([0,0,45])
-cube(size=[3,1,outside_Box_height_mm/4],center=true);
+cube(size=[3,1,lid_pin_height],center=true);
 rotate([0,0,-45])
-cube(size=[3,1,outside_Box_height_mm/4],center=true);
+cube(size=[3,1,lid_pin_height],center=true);
 }
-translate([(outside_box_lenth_mm-5)/2,0-(outside_box_width_mm-5)/2,-2]){
+translate([(outside_box_lenth_mm-5)/2,0-(outside_box_width_mm-5)/2,-lid_pin_height/2]){
 rotate([0,0,45])
-cube(size=[3,1,outside_Box_height_mm/4],center=true);
+cube(size=[3,1,lid_pin_height],center=true);
 rotate([0,0,-45])
-cube(size=[3,1,outside_Box_height_mm/4],center=true);
-}
-
-translate([0-(outside_box_lenth_mm-5)/2,(outside_box_width_mm-5)/2,-2]){
-rotate([0,0,45])
-cube(size=[3,1,outside_Box_height_mm/4],center=true);
-rotate([0,0,-45])
-cube(size=[3,1,outside_Box_height_mm/4],center=true);
+cube(size=[3,1,lid_pin_height],center=true);
 }
 
-
-translate([0-(outside_box_lenth_mm-5)/2,0-(outside_box_width_mm-5)/2,-2]){
+translate([0-(outside_box_lenth_mm-5)/2,(outside_box_width_mm-5)/2,-lid_pin_height/2]){
 rotate([0,0,45])
-cube(size=[3,1,outside_Box_height_mm/4],center=true);
+cube(size=[3,1,lid_pin_height],center=true);
 rotate([0,0,-45])
-cube(size=[3,1,outside_Box_height_mm/4],center=true);
+cube(size=[3,1,lid_pin_height],center=true);
 }
 
 
+translate([0-(outside_box_lenth_mm-5)/2,0-(outside_box_width_mm-5)/2,-lid_pin_height/2]){
+rotate([0,0,45])
+cube(size=[3,1,lid_pin_height],center=true);
+rotate([0,0,-45])
+cube(size=[3,1,lid_pin_height],center=true);
+}
 
-translate([0,0-(outside_box_width_mm-5)/2,-2]){
+
+
+translate([0,0-(outside_box_width_mm-5)/2,-lid_pin_height/2]){
 rotate([0,0,45])
-cube(size=[3,1,outside_Box_height_mm/4],center=true);
+cube(size=[3,1,lid_pin_height],center=true);
 rotate([0,0,-45])
-cube(size=[3,1,outside_Box_height_mm/4],center=true);
+cube(size=[3,1,lid_pin_height],center=true);
 }
-translate([0,(outside_box_width_mm-5)/2,-2]){
+translate([0,(outside_box_width_mm-5)/2,-lid_pin_height/2]){
 rotate([0,0,45])
-cube(size=[3,1,outside_Box_height_mm/4],center=true);
+cube(size=[3,1,lid_pin_height],center=true);
 rotate([0,0,-45])
-cube(size=[3,1,outside_Box_height_mm/4],center=true);
+cube(size=[3,1,lid_pin_height],center=true);
 }
-translate([0-(outside_box_lenth_mm-5)/2,0,-2]){
+translate([0-(outside_box_lenth_mm-5)/2,0,-lid_pin_height/2]){
 rotate([0,0,45])
-cube(size=[3,1,outside_Box_height_mm/4],center=true);
+cube(size=[3,1,lid_pin_height],center=true);
 rotate([0,0,-45])
-cube(size=[3,1,outside_Box_height_mm/4],center=true);
+cube(size=[3,1,lid_pin_height],center=true);
 }
-translate([(outside_box_lenth_mm-5)/2,0,-2]){
+translate([(outside_box_lenth_mm-5)/2,0,-lid_pin_height/2]){
 rotate([0,0,45])
-cube(size=[3,1,outside_Box_height_mm/4],center=true);
+cube(size=[3,1,lid_pin_height],center=true);
 rotate([0,0,-45])
-cube(size=[3,1,outside_Box_height_mm/4],center=true);
+cube(size=[3,1,lid_pin_height],center=true);
 }
 
 
