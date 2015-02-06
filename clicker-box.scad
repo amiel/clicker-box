@@ -22,27 +22,35 @@ mount2_position_mm_y = -10;
 mount2_position_mm_z = 8;
 
 
-mount3_position_mm_x =10;
+mount3_position_mm_x =-20;
 mount3_position_mm_y =-10;
 mount3_position_mm_z =15;
 
-mount4_position_mm_x =-10;
+mount4_position_mm_x =-20;
 mount4_position_mm_y =10;
 mount4_position_mm_z =15;
 
 lid_pin_height = 6;
 
 print=0 ;//0=both, 1=box, 2=lid
-overlay=1;//if one then shows invisible other side.
+overlay=0;//if one then shows invisible other side.
+
+switch_width = 9;
+switch_height = 3;
+charger_hole_width = 8;
+charger_hole_height = 4;
+
+wall_thickness = 5;
 
 module remove(){
 
-	translate([0,inside_box_width_mm/2 + 2,0])
-		cube([9,5,3],center=true);
+	// Switch hole
+	translate([inside_box_lenth_mm/4, inside_box_width_mm/2 + 2, -3])
+		cube([switch_width,wall_thickness+2,switch_height],center=true);
 
 	// Charger hole
 	translate([inside_box_lenth_mm/2+2, 0, inside_Box_height_mm / 2 - 3 - mount1_position_mm_z - 1])
-		cube([6,8,4], center=true);
+		cube([wall_thickness+2,charger_hole_width,charger_hole_height], center=true);
 
 }
 
