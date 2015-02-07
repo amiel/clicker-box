@@ -4,31 +4,28 @@
 //james villeneuve
 outside_box_lenth_mm = 85;
 outside_box_width_mm =40;
-outside_Box_height_mm =32;
+outside_Box_height_mm =40;
 inside_box_lenth_mm = 80;
 inside_box_width_mm =35;
-inside_Box_height_mm =30;
+inside_Box_height_mm =38;
 oversize =0.25;//this is wiggle room it oversizes entire box for room to fit electronics in
 //assume 4 mount points for board. this is x/y position and post hieght in z
 
 // Charger mount right next to the wall
 mount1_position_mm_x = inside_box_lenth_mm / 2 - 3;
 mount1_position_mm_y = 10;
-mount1_position_mm_z = 8;
+mount1_position_mm_z = 4;
 
 // Other charger mount
 mount2_position_mm_x = inside_box_lenth_mm / 2 - 3 - 17.5;
 mount2_position_mm_y = -10;
-mount2_position_mm_z = 8;
+mount2_position_mm_z = 4;
 
 
-mount3_position_mm_x =-20;
-mount3_position_mm_y =-10;
-mount3_position_mm_z =15;
+mount3_position_mm_x =-20; // 17 + 1 from wall
+mount3_position_mm_y = -3; // 13 + 1 mm from wall
+mount3_position_mm_z =6;
 
-mount4_position_mm_x =-20;
-mount4_position_mm_y =10;
-mount4_position_mm_z =15;
 
 lid_pin_height = 6;
 
@@ -42,14 +39,16 @@ charger_hole_height = 4;
 
 wall_thickness = 5;
 
+charger_hole_z = inside_Box_height_mm / 2 - 3 - mount1_position_mm_z - 1;
+
 module remove(){
 
 	// Switch hole
-	translate([inside_box_lenth_mm/4, inside_box_width_mm/2 + 2, -3])
+	translate([inside_box_lenth_mm/4, inside_box_width_mm/2 + 2, charger_hole_z - 5])
 		cube([switch_width,wall_thickness+2,switch_height],center=true);
 
 	// Charger hole
-	translate([inside_box_lenth_mm/2+2, 0, inside_Box_height_mm / 2 - 3 - mount1_position_mm_z - 1])
+	translate([inside_box_lenth_mm/2+2, 0, charger_hole_z])
 		cube([wall_thickness+2,charger_hole_width,charger_hole_height], center=true);
 
 }
@@ -109,10 +108,14 @@ cylinder(r1=6/2,r2=6/2,h=z,center=true,$fn=40);
 translate([x,y,inside_Box_height_mm-outside_Box_height_mm+outside_Box_height_mm /2-z/2])
 cylinder(r1=2.5/2,r2=2.5/2,h=z+0.1,center=true,$fn=40);
 
-
-
 }
 }
+
+module mount2(x,y,z) {
+translate([x,y,inside_Box_height_mm-outside_Box_height_mm+outside_Box_height_mm /2-z/2])
+cylinder(r1=2,r2=2,h=z,center=true,$fn=40);
+}
+
 if (print==0 || print==1){
 //main shape and subtraction
 difference(){
@@ -186,8 +189,8 @@ cylinder(r1=2,r2=2,h=outside_Box_height_mm +1,center=true,$fn=40);
 //mounts
 mount(mount1_position_mm_x,mount1_position_mm_y,mount1_position_mm_z );
 mount(mount2_position_mm_x,mount2_position_mm_y,mount2_position_mm_z );
-mount(mount3_position_mm_x,mount3_position_mm_y,mount3_position_mm_z );
-mount(mount4_position_mm_x,mount4_position_mm_y,mount4_position_mm_z );
+mount2(mount3_position_mm_x,mount3_position_mm_y,mount3_position_mm_z );
+
 
 }
 if (print==0 || print==2){
