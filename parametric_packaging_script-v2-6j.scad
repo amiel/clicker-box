@@ -246,7 +246,7 @@ box_type="rounded6sides";//"rounded4sides";//"cuboid","rounded4sides", "rounded6
 holes = [ //format [face_name, shape_name, shape_position[x_pos,y_pos,x_offs,y_offs,rotate,align], shape_size[depth,,,]]
 
 	//cutout for switch
-	["S", "Round_Rect", [-(19.5-(device_xyz[1]-8.5)/2), +0.75-0.5+4.2-0.1,0,0,0,"outside"],				[wall_t+3, 10, 4.5,1,3]	 ],
+	["S", "Round_Rect", [10, 14, -device_xyz[0]/2 - wall_t + 5, -device_xyz[1]/2 - wall_t + 6.5, 0, "outside"], [wall_t+3, 10, 4.5, 1, 3]	 ],
 
 //cutout for uUSB metal plug#uUSB spec is 6.85*1.8, measured at ~7*2.1, seems to be roughly centred on plugs I measured
 	["E", "Rectangle",  [0, 3+4, 0, -device_xyz[1]/2 + wall_t, 0, "inside"], [wall_t/2, 7.6, 2.7] ],
