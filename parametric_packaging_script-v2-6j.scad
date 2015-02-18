@@ -194,7 +194,7 @@ TYNDALL NATIONAL INSTITUTE SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, BUT
 a_bit=0.1;
 /* [User Controls] */
 //dimensions of the object to be packaged
-device_xyz=[80,35,11.05];////11.05 for battery on bottom "1,2"//11.65 for battery on top "3,4"
+device_xyz=[80,35,25];////11.05 for battery on bottom "1,2"//11.65 for battery on top "3,4"
 //size of the gap between each side of the object and the internal wall of the packaging
 clearance_xyz=[0.5,0.5,0.5];//
 //how thick the material of the packaging in each direction//recommend keeping X&Y value the same
@@ -245,11 +245,13 @@ box_type="rounded6sides";//"rounded4sides";//"cuboid","rounded4sides", "rounded6
 //data structure defining all the cutouts and depressions used on the packaging
 holes = [ //format [face_name, shape_name, shape_position[x_pos,y_pos,x_offs,y_offs,rotate,align], shape_size[depth,,,]]
 
+	//cutout for switch
+	["S", "Round_Rect", [-(19.5-(device_xyz[1]-8.5)/2), +0.75-0.5+4.2-0.1,0,0,0,"outside"],				[wall_t+3, 10, 4.5,1,3]	 ],
 
-	["E", "Round_Rect",		[-(19.5-(device_xyz[1]-8.5)/2), +0.75-0.5+4.2-0.1,0,0,0,"outside"],				[wall_t+3, 10, 4.5,1,3]			],//cutout for switch
-
-	["E", "Rectangle",		[-(6.93-(device_xyz[1]-8)/2), -0.15+4.2-0.1,0,0,0,"inside"],				[wall_t/2, 7.6, 2.7]			],//cutout for uUSB metal plug#uUSB spec is 6.85*1.8, measured at ~7*2.1, seems to be roughly centred on plugs I measured
-	["E", "Round_Rect",		[-(6.93-(device_xyz[1]-8)/2), -0.15+4.2-0.1,0,0,0,"outside"],				[wall_t/2 + lip_fit/2, 11.5, 7.7,1,3]			],//cutout for uUSB plastic overmold plug#uUSBspec maximum overmold size of 10.6 by 8.5 mm measured at ~10.8x7mm
+//cutout for uUSB metal plug#uUSB spec is 6.85*1.8, measured at ~7*2.1, seems to be roughly centred on plugs I measured
+	["E", "Rectangle",  [0, 3+4, 0, -device_xyz[1]/2 + wall_t, 0, "inside"], [wall_t/2, 7.6, 2.7] ],
+//cutout for uUSB plastic overmold plug#uUSBspec maximum overmold size of 10.6 by 8.5 mm measured at ~10.8x7mm
+	["E", "Round_Rect", [0, 3+4, 0, -device_xyz[1]/2 + wall_t, 0, "outside"], [wall_t/2 + lip_fit/2, 11.5, 7.7,1,3] ],
 	
 
 	//hole for screw post sized for "no. 2 screw" of "type AB or type Y for self tapping hard plastic resins" i.e. thread diamter 0.086"(2.184mm) hole diameter 0.094"(2.3876mm) head diamtere 0.14" 3.556mm from http://www.csgnetwork.com/screwinfo.html
@@ -280,9 +282,9 @@ posts = [ //format [face_name, shape_name shape_position[x_pos,y_pos,x_offs,y_of
 
 	
     // Charger mounts
-	["B", "Hollow_Cylinder",	[-3,10,device_xyz[0]/2,0,0,"inside"],			[(1-top_bottom_ratio)*device_xyz[2]+post_tolerance-a_bit,(3.556/2)+1,(2.3876/2),16]		],
+	["B", "Hollow_Cylinder",	[-3.5,10,device_xyz[0]/2,0,0,"inside"], [3,(3.556/2)+1,(2.3876/2),16] ],
 
-	["B", "Hollow_Cylinder",	[-17.5,-10,device_xyz[0]/2,0,0,"inside"],			[(1-top_bottom_ratio)*device_xyz[2]+post_tolerance-a_bit,(3.556/2)+1,(2.3876/2),16]		],
+	["B", "Hollow_Cylinder",	[-18,-10,device_xyz[0]/2,0,0,"inside"], [3,(3.556/2)+1,(2.3876/2),16] ],
 	
 
 	];
