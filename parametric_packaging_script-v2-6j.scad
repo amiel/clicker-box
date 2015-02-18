@@ -194,7 +194,7 @@ TYNDALL NATIONAL INSTITUTE SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, BUT
 a_bit=0.1;
 /* [User Controls] */
 //dimensions of the object to be packaged
-device_xyz=[42,28,11.05];////11.05 for battery on bottom "1,2"//11.65 for battery on top "3,4"
+device_xyz=[80,35,11.05];////11.05 for battery on bottom "1,2"//11.65 for battery on top "3,4"
 //size of the gap between each side of the object and the internal wall of the packaging
 clearance_xyz=[0.5,0.5,0.5];//
 //how thick the material of the packaging in each direction//recommend keeping X&Y value the same
@@ -240,31 +240,23 @@ lip_fit=0.35;
 has_device=false;//true/false
 
 //what style of box is it
-box_type="rounded4sides";//"rounded4sides";//"cuboid","rounded4sides", "rounded6sides", "chamfered6sides"
+box_type="rounded6sides";//"rounded4sides";//"cuboid","rounded4sides", "rounded6sides", "chamfered6sides"
 
 //data structure defining all the cutouts and depressions used on the packaging
 holes = [ //format [face_name, shape_name, shape_position[x_pos,y_pos,x_offs,y_offs,rotate,align], shape_size[depth,,,]]
 
-	["S", "Rectangle",		[(17.58-(device_xyz[0]-15.25)/2), 0.5+4.2+1.1,0,-device_xyz[2]/2,0,"inside"],				[wall_t, 14, 2]			],//cutout for uSD card
-	["S", "Ellipse",	[(17.58-(device_xyz[0]-15.25)/2), -1+0.5+4.2+1.1,0,-device_xyz[2]/2,0,"outside"],	[wall_t/2,14/2,2,16]		],//cutout to aid inserting/removing uSD card////(depth, radius_length, radius_breadth, sides)
 
 	["E", "Round_Rect",		[-(19.5-(device_xyz[1]-8.5)/2), +0.75-0.5+4.2-0.1,0,0,0,"outside"],				[wall_t+3, 10, 4.5,1,3]			],//cutout for switch
 
 	["E", "Rectangle",		[-(6.93-(device_xyz[1]-8)/2), -0.15+4.2-0.1,0,0,0,"inside"],				[wall_t/2, 7.6, 2.7]			],//cutout for uUSB metal plug#uUSB spec is 6.85*1.8, measured at ~7*2.1, seems to be roughly centred on plugs I measured
 	["E", "Round_Rect",		[-(6.93-(device_xyz[1]-8)/2), -0.15+4.2-0.1,0,0,0,"outside"],				[wall_t/2 + lip_fit/2, 11.5, 7.7,1,3]			],//cutout for uUSB plastic overmold plug#uUSBspec maximum overmold size of 10.6 by 8.5 mm measured at ~10.8x7mm
 	
-	["T", "Rectangle",	[6,11.5,0,0,0,"inside"],		[wall_t/2,2,2]		],//partial cutout for LED1
-	["T", "Rectangle",	[-7,0.7,0,0,0,"inside"],					[wall_t/2,2,2]		],//partial cutout for LED2
-	
+
 	//hole for screw post sized for "no. 2 screw" of "type AB or type Y for self tapping hard plastic resins" i.e. thread diamter 0.086"(2.184mm) hole diameter 0.094"(2.3876mm) head diamtere 0.14" 3.556mm from http://www.csgnetwork.com/screwinfo.html
 	["B", "Cylinder",	[6.5,1.5,-device_xyz[0]/2,-device_xyz[1]/2,0,"outside"],			[-2+wall_t+(1-top_bottom_ratio)*device_xyz[2]+clearance_xyz[2],3.556/2,16]		],//post in cutout
 	//["B", "Cylinder",	[8,2.7,-device_xyz[0]/2,-device_xyz[1]/2,0,"outside"],			[(1-top_bottom_ratio)*device_xyz[2]-a_bit,0.5,6]		],//post in cutout
 	//["B", "Cylinder",	[8,2.7,-device_xyz[0]/2,-device_xyz[1]/2,0,"outside"],			[3+wall_t+(1-top_bottom_ratio)*device_xyz[2]-a_bit,0.5,6]		],//post in cutout
-	
-	//holes for  internal buttons
-	
-	["W", "Cylinder",		[-1.38-1.6,0,device_xyz[1]/2,0,0,"outside"],				[wall_t+10, 0.5, 16]			],
-	["W", "Cylinder",		[-6.91-1.6,0,device_xyz[1]/2,0,0,"outside"],				[wall_t+10, 0.5, 16]			],
+
 	
 	//[depth, length, breadth, corner_radius, corner_sides]
 
@@ -276,78 +268,23 @@ holes = [ //format [face_name, shape_name, shape_position[x_pos,y_pos,x_offs,y_o
 //data structure defining all the internal supporting structures used on the packaging
 posts = [ //format [face_name, shape_name shape_position[x_pos,y_pos,x_offs,y_offs,rotate,align], shape_size[depth,,,]]
 	
-	// ["T", "Cylinder",	[24,31.5+7.5/2,-27/2,-40/2,30,"inside"],					[3.55+clearance_xyz[2]-post_tolerance,3,6]		],//Post above uUSB
-	// ["T", "Cylinder",	[7.2+6.7/2,28+6.7/2,-27/2,-40/2,0,"inside"],				[4.85+clearance_xyz[2]-post_tolerance,3,6]		],//post above zigbee
-	// ["T", "Cylinder",	[22+4/2,1.14+4/2,-27/2,-40/2,30,"inside"],					[4.33+clearance_xyz[2]-post_tolerance,3,6]		],//post above mag
-	// ["T", "Rectangle",	[-3,28,0,-40/2,90,"inside"],					[3,2,6]		],//battery retainers across leads
-	// ["T", "Rectangle",	[-5,13,+27/2,-40/2,0,"inside"],					[3,2,10]		],//batter retainer along side
-	
-	// ["B", "Cylinder",	[0,+6,0,-40/2,30,"inside"],				[clearance_xyz[2]-post_tolerance,3,6]		],//post beneath uSD cage
-	// ["B", "Cylinder",	[-(1.88+4/2),+4,27/2,-40/2,30,"inside"],				[clearance_xyz[2]+1.88-post_tolerance,3,6]		],//post beneath mag
-	// ["B", "Cylinder",	[0,-5,0,40/2,30,"inside"],			[clearance_xyz[2]+1.88-post_tolerance,3,6]		],//post beneath space between uUSB and ant
-	
-	// ["T", "Cylinder",	[7,2.5,-device_xyz[0]/2,-device_xyz[1]/2,0,"inside"],			[3,3.5,10]		],//post in cutout
-	// ["B", "Cylinder",	[7,2.5,-device_xyz[0]/2,-device_xyz[1]/2,0,"inside"],			[clearance_xyz[2]-post_tolerance+5.8,3.5,10]		],//post in cutout
-	//["B", "Cylinder",	[7,2.5,-device_xyz[0]/2,-device_xyz[1]/2,0,"inside"],			[clearance_xyz[2]-post_tolerance+7,2,10]		],//post in cutout
-	
+
 	
 	//Hollow_Cylinder"){ //(depth, radius_outside, radius_inside ,sides)
 	//"no. 2 screw" of "type AB or type Y for self tapping hard plastic resins"
 	//thread diamter 0.086"(2.184mm) hole diameter 0.094"(2.3876mm) head diameter 0.14" 3.556mm from http://www.csgnetwork.com/screwinfo.html
+
+	// Original screw hole
 	["B", "Hollow_Cylinder",	[6.5,1.5,-device_xyz[0]/2,-device_xyz[1]/2,0,"inside"],			[(1-top_bottom_ratio)*device_xyz[2]+post_tolerance-a_bit,(3.556/2)+1,(2.3876/2),16]		],//post in cutout
 	["T", "Hollow_Cylinder",	[6.5,1.5,-device_xyz[0]/2,-device_xyz[1]/2,0,"inside"],			[(top_bottom_ratio)*device_xyz[2]+post_tolerance-a_bit,(3.556/2)+1,(2/2),16]		],//post in cutout
+
 	
-	//["B", "Cylinder",	[8,2.7,-device_xyz[0]/2,-device_xyz[1]/2,0,"inside"],			[(1-top_bottom_ratio)*device_xyz[2]+post_tolerance-a_bit,2,16]		],//post in cutout
-	//["T", "Cylinder",	[8,2.7,-device_xyz[0]/2,-device_xyz[1]/2,0,"inside"],			[(top_bottom_ratio)*device_xyz[2]+post_tolerance-a_bit,2,16]		],//post in cutout
-	//structures to hold pcb in place laterally
+    // Charger mounts
+	["B", "Hollow_Cylinder",	[-3,10,device_xyz[0]/2,0,0,"inside"],			[(1-top_bottom_ratio)*device_xyz[2]+post_tolerance-a_bit,(3.556/2)+1,(2.3876/2),16]		],
 
-	["S", "Rectangle",	[-10,0,0,0,0,"inside"],					[1,2,device_xyz[2]+2*clearance_xyz[2]+a_bit]		],//PCB lateral retainer
-	["N", "Rectangle",	[10,0,0,0,0,"inside"],					[1,2,device_xyz[2]+2*clearance_xyz[2]+a_bit]		],//PCB lateral retainer
-	["N", "Rectangle",	[-10,0,0,0,0,"inside"],					[1,2,device_xyz[2]+2*clearance_xyz[2]+a_bit]		],//PCB lateral retainer
-	["W", "Rectangle",	[-4,0,0,0,0,"inside"],					[1,2,device_xyz[2]+2*clearance_xyz[2]+a_bit]		],//PCB lateral retainer
-	["E", "Rectangle",	[+10,0,0,0,0,"inside"],					[1,2,device_xyz[2]+2*clearance_xyz[2]+a_bit]		],//PCB lateral retainer
-	["E", "Rectangle",	[-4,0,0,0,0,"inside"],					[1,2,device_xyz[2]+2*clearance_xyz[2]+a_bit]		],//PCB lateral retainer
-
-//batttery holding
-	["B", "Rectangle",	[0,0,0,0,90,"inside"],					[4,device_xyz[1]+2*clearance_xyz[1]+a_bit,1]		],//battery retainers across leads
-	["B", "Rectangle",	[0,5.5,0,0,0,"inside"],					[4,device_xyz[0]+2*clearance_xyz[0]+a_bit,1]		],//battery retainer along side
-	["B", "Rectangle",	[10,0,0,0,90,"inside"],					[4,device_xyz[1]+2*clearance_xyz[1]+a_bit,1]		],//battery retainers across leads
-	["B", "Rectangle",	[0,11,0,0,0,"inside"],					[4,device_xyz[0]+2*clearance_xyz[0]+a_bit,1]		],//batter retainer along side
-	["B", "Rectangle",	[-10,0,0,0,90,"inside"],					[4,device_xyz[1]+2*clearance_xyz[1]+a_bit,1]		],//battery retainers across leads
-	["B", "Rectangle",	[0,-4,0,0,0,"inside"],					[4,device_xyz[0]+2*clearance_xyz[0]+a_bit,1]		],//batter retainer along side
-
-//underside switch guides
-	["B", "Rectangle",	[(-device_xyz[0]+8)/2 -clearance_xyz[0]-a_bit,11,0,0,0,"inside"],					[device_xyz[2]*(1-top_bottom_ratio)+clearance_xyz[2],8,3]		],//battery retainer along side
-	["B", "Rectangle",	[(-device_xyz[0]+8)/2 -clearance_xyz[0]-a_bit,5.5,0,0,0,"inside"],					[device_xyz[2]*(1-top_bottom_ratio)+clearance_xyz[2],8,3]		],//battery retainer along side
-
-
-	// ["S", "Rectangle",	[-10,0,0,0,0,"inside"],					[clearance_xyz[1],2,device_xyz[2]+2*clearance_xyz[2]+a_bit]		],//PCB lateral retainer
-	// ["N", "Rectangle",	[10,0,0,0,0,"inside"],					[clearance_xyz[1],2,device_xyz[2]+2*clearance_xyz[2]+a_bit]		],//PCB lateral retainer
-	// ["N", "Rectangle",	[-10,0,0,0,0,"inside"],					[clearance_xyz[1],2,device_xyz[2]+2*clearance_xyz[2]+a_bit]		],//PCB lateral retainer
-	// ["W", "Rectangle",	[0,0,0,0,0,"inside"],					[clearance_xyz[0],2,device_xyz[2]+2*clearance_xyz[2]+a_bit]		],//PCB lateral retainer
-	// ["E", "Rectangle",	[+12,0,0,0,0,"inside"],					[clearance_xyz[0],2,device_xyz[2]+2*clearance_xyz[2]+a_bit]		],//PCB lateral retainer
-	// ["E", "Rectangle",	[-4,0,0,0,0,"inside"],					[clearance_xyz[0],2,device_xyz[2]+2*clearance_xyz[2]+a_bit]		],//PCB lateral retainer
+	["B", "Hollow_Cylinder",	[-17.5,-10,device_xyz[0]/2,0,0,"inside"],			[(1-top_bottom_ratio)*device_xyz[2]+post_tolerance-a_bit,(3.556/2)+1,(2.3876/2),16]		],
 	
-	// ["S", "Rectangle",	[-10,0,0,-(1-top_bottom_ratio)*device_xyz[2]+10.1/2-a_bit,0,"inside"],					[2,2,9]		],//PCB lateral retainer bottom
-	// ["N", "Rectangle",	[10,0,0,-(1-top_bottom_ratio)*device_xyz[2]+10.1/2-a_bit,0,"inside"],					[2,2,9]		],//PCB lateral retainer
-	// ["N", "Rectangle",	[-10,0,0,-(1-top_bottom_ratio)*device_xyz[2]+10.1/2-a_bit,0,"inside"],					[2,2,9]		],//PCB lateral retainer
-	// ["W", "Rectangle",	[0,0,0,-(1-top_bottom_ratio)*device_xyz[2]+10.1/2-a_bit,0,"inside"],					[2,2,9]		],//PCB lateral retainer
-	// ["E", "Rectangle",	[+12,0,0,-(1-top_bottom_ratio)*device_xyz[2]+10.1/2-a_bit,0,"inside"],					[2,2,9]		],//PCB lateral retainer
-	// ["E", "Rectangle",	[-4,0,0,-(1-top_bottom_ratio)*device_xyz[2]+10.1/2-a_bit,0,"inside"],					[clearance_xyz[0]+1,2,10.1]		],//PCB lateral retainer
 
-	// ["S", "Rectangle",	[-10,0,0,(top_bottom_ratio)*device_xyz[2]+3.7/2+a_bit,0,"inside"],					[2,2,3.7]		],//PCB lateral retainer top
-	// ["N", "Rectangle",	[10,0,0,(top_bottom_ratio)*device_xyz[2]+3.7/2+a_bit,0,"inside"],					[2,2,3.7]		],//PCB lateral retainer
-	// ["N", "Rectangle",	[-10,0,0,(top_bottom_ratio)*device_xyz[2]+3.7/2+a_bit,0,"inside"],					[2,2,3.7]		],//PCB lateral retainer
-	// ["W", "Rectangle",	[0,0,0,(top_bottom_ratio)*device_xyz[2]+3.7/2+a_bit,0,"inside"],					[2,2,3.7]		],//PCB lateral retainer
-	// ["E", "Rectangle",	[+12,0,0,(top_bottom_ratio)*device_xyz[2]+3.7/2+a_bit,0,"inside"],					[2,2,3.7]		],//PCB lateral retainer
-	// ["E", "Rectangle",	[-4,0,0,(top_bottom_ratio)*device_xyz[2]+3.7/2+a_bit,0,"inside"],					[clearance_xyz[0]+1,2,3.7]		],//PCB lateral retainer
-
-	// ["S", "Rectangle",	[0,0,0,0,0,"inside"],					[clearance_xyz[1]-post_tolerance,2,7]		],//PCB lateral retainer
-	// ["N", "Rectangle",	[0,0,0,0,0,"inside"],					[clearance_xyz[1]-post_tolerance,2,7]		],//PCB lateral retainer
-	// ["W", "Rectangle",	[0,0,0,0,0,"inside"],					[clearance_xyz[0]-post_tolerance,2,7]		],//PCB lateral retainer
-	// ["E", "Rectangle",	[-7,0,0,0,0,"inside"],					[clearance_xyz[0]-post_tolerance,2,7]		],//PCB lateral retainer
-	// ["E", "Rectangle",	[+7,0,0,0,0,"inside"],					[clearance_xyz[0]-post_tolerance,2,7]		],//PCB lateral retainer
-	
 	];
 //data structure defining all the engraved text used on the packaging
 text_engrave_emboss_depth=1;
@@ -355,14 +292,12 @@ text_height_big=7;
 text_height_small=3;
 text_spacing=1.1;
 text = [//recessed text on faces [face_name, text_to_write, shape_position[x_pos,y_pos,x_offs,y_offs,rotate,align], shape_size[depth,font_height,font_spacing,mirror]] Note: for silly reasons mirror must be 0 or 1 corresponding to false and true in this version
-	["T", "WIMU 4",		[0,6,0,0,0,"outside"], 				[text_engrave_emboss_depth,text_height_big,text_spacing,0]],
-	["T", "+Z",			[0,-6,0,0,0,"outside"], 			[text_engrave_emboss_depth,text_height_big,text_spacing,0]],
-	["T", "uSD",		[-5,-14,0,0,0,"outside"], 			[text_engrave_emboss_depth,text_height_small,text_spacing,0]],
-	["T", "O I",		[21,-10,0,0,90,"outside"], 			[text_engrave_emboss_depth,text_height_small,text_spacing,0]],
-	["T", "USB",		[21,4,0,0,270,"outside"], 			[text_engrave_emboss_depth,text_height_small,text_spacing,0]],
-	["S", "+X",			[10,0,0,5,0,"outside"], 			[text_engrave_emboss_depth,text_height_big,text_spacing,0]],
-	["N", "-X",			[0,0,0,0,0,"outside"], 				[text_engrave_emboss_depth,text_height_big,text_spacing,0]],
-	["W", "-Y",			[0,0,0,0,0,"outside"], 				[text_engrave_emboss_depth,text_height_big,text_spacing,0]],
+	["T", ":D",		[0,0.5,0,0,0,"outside"], 				[text_engrave_emboss_depth,text_height_big,text_spacing,0]],
+	["T", "USB",		[18,4,0,0,270,"outside"], 			[text_engrave_emboss_depth,text_height_small,text_spacing,0]],
+    ["T", "0 1",            [18,-9,0,0,270,"outside"], [text_engrave_emboss_depth,text_height_small,text_spacing,0]],
+//	["S", "+X",			[10,0,0,5,0,"outside"], 			[text_engrave_emboss_depth,text_height_big,text_spacing,0]],
+//	["N", "-X",			[0,0,0,0,0,"outside"], 				[text_engrave_emboss_depth,text_height_big,text_spacing,0]],
+//	["W", "-Y",			[0,0,0,0,0,"outside"], 				[text_engrave_emboss_depth,text_height_big,text_spacing,0]],
 	//["E", "+Y",			[0,0,0,0,0,"outside"], 				[text_engrave_emboss_depth,text_height_big,text_spacing,0]],
 
 	];
