@@ -289,9 +289,8 @@ posts = [ //format [face_name, shape_name shape_position[x_pos,y_pos,x_offs,y_of
 	["B", "Cylinder",	[-32,-7, device_xyz[0]/2,0, 0,"inside"], [4, 9/2, 32]],
 	["B", "Cylinder",	[-32,-7, device_xyz[0]/2,0, 0,"inside"], [12, 6/2, 32]],
 
-//		"Nub_Post" shape_size[depth, radius_bottom, radius_top, depth_nub, sides]
-//		"Dip_Post" shape_size[depth, radius_bottom, radius_top, depth_dip, sides]
-
+	// Clicker wedge
+	["T", "Wedge", [-6,0, 0,0, 180, "inside"], [1, 12, 17]],
 	];
 //data structure defining all the engraved text used on the packaging
 text_engrave_emboss_depth=1;
@@ -750,6 +749,21 @@ module make_posts(box, posts){//this will be based on make_cutouts
 	}
 }
 
+module wedge(height, length, width) {
+	a_bit = 0.01;
+	hypotenuse = sqrt(length*length + height*height);
+	angle = atan(height / length);
+
+	difference(){
+		cube([length, width, height]);
+
+		translate([0, -a_bit/2, 0])
+	  		rotate([0, -angle, 0])
+				cube([hypotenuse + a_bit, width + a_bit, height]);
+	}
+}
+
+
 module make_shape(shape, shape_data){
 	a_bit=0.01;//for ensuring manifoldness
 	//shape="Cone";//"Ellipse";//"Cylinder";//"Round_Rect";//"Square";//"Rectangle";Nub_Post, Dip_Post, Hollow_Cylinder
@@ -759,7 +773,13 @@ module make_shape(shape, shape_data){
 		
 	}else if(shape=="Rectangle"){//[depth, length, breadth]
 		cube(size=[shape_data[1],shape_data[2],shape_data[0]+a_bit],center=true);//do thing for rectangle
-		
+
+	}else if(shape=="Wedge"){//[depth, length, breadth]
+
+		translate([0, -shape_data[2]/2, 0])
+		rotate([0,180,0])
+		wedge(shape_data[0], shape_data[1], shape_data[2]);
+
 	}else if(shape=="Round_Rect"){//[depth, length, breadth, corner_radius, corner_sides]
 		rounded_rectangle_cylinder_hull(shape_data[1],shape_data[2],shape_data[0]+a_bit, shape_data[3], shape_data[4]);
 		/*hull(){
