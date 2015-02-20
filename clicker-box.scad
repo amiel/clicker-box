@@ -288,7 +288,8 @@ posts = [ //format [face_name, shape_name shape_position[x_pos,y_pos,x_offs,y_of
 	
 
 	// spring mount
-//	["B", "Nub_Post",	[0,0, device_xyz[0]/2,0, 0,"inside"], [6, 9/2, 6/2, 0, 32]],
+	["B", "Cylinder",	[-34,-8, device_xyz[0]/2,0, 0,"inside"], [4, 9/2, 32]],
+	["B", "Cylinder",	[-34,-8, device_xyz[0]/2,0, 0,"inside"], [12, 6/2, 32]],
 
 //		"Nub_Post" shape_size[depth, radius_bottom, radius_top, depth_nub, sides]
 //		"Dip_Post" shape_size[depth, radius_bottom, radius_top, depth_dip, sides]
