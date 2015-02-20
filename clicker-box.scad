@@ -225,7 +225,7 @@ mouse_ear_thickness=0.32*2;
 mouse_ear_radius=10;
 
 //the layout of the parts
-layout="beside";//[beside, stacked, top, bottom, topflipped, bottomflipped]
+layout="bottom";//[beside, stacked, top, bottom, topflipped, bottomflipped]
 
 //the orientation of the parts
 flipped=true;
@@ -282,10 +282,16 @@ posts = [ //format [face_name, shape_name shape_position[x_pos,y_pos,x_offs,y_of
 
 	
     // Charger mounts
-	["B", "Hollow_Cylinder",	[-3.5,10,device_xyz[0]/2,0,0,"inside"], [3,(3.556/2)+1,(2.3876/2),16] ],
+	["B", "Hollow_Cylinder",	[-3.5, 10,device_xyz[0]/2,0,0,"inside"], [3,(3.556/2)+1,(2.3876/2),16] ],
 
-	["B", "Hollow_Cylinder",	[-18,-10,device_xyz[0]/2,0,0,"inside"], [3,(3.556/2)+1,(2.3876/2),16] ],
+	["B", "Hollow_Cylinder",	[-21,-10,device_xyz[0]/2,0,0,"inside"], [3,(3.556/2)+1,(2.3876/2),16] ],
 	
+
+	// spring mount
+//	["B", "Nub_Post",	[0,0, device_xyz[0]/2,0, 0,"inside"], [6, 9/2, 6/2, 0, 32]],
+
+//		"Nub_Post" shape_size[depth, radius_bottom, radius_top, depth_nub, sides]
+//		"Dip_Post" shape_size[depth, radius_bottom, radius_top, depth_dip, sides]
 
 	];
 //data structure defining all the engraved text used on the packaging
@@ -358,7 +364,11 @@ locking_feature_max_ly=device_xyz[0]-10;//20;
 
 //********************************includes******************//
 use<write.scad>;
-//use<wimuv4_stack_v0.1.scad>;
+use<charge-controller.scad>;
+
+translate([39, -12.6, 16.2])
+	rotate([180,0,180])
+	chargeController();
 
 //******************************calls**********************//
 	make_box(box,corner_radius, corner_sides, lip_h, lip_fit, top_bottom_ratio, mouse_ears, layout, flipped, separation, holes, posts, text, items, has_device, box_type, has_flanges, flanges);
