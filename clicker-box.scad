@@ -225,10 +225,10 @@ mouse_ear_thickness=0.32*2;
 mouse_ear_radius=10;
 
 //the layout of the parts
-layout="bottom";//[beside, stacked, top, bottom, topflipped, bottomflipped]
+layout="beside";//[beside, stacked, top, bottom]
 
 //the orientation of the parts
-flipped=true;
+flipped=false;
 
 //how far apart the 2 halves are in the "beside" layout
 separation=7;//2;
@@ -255,13 +255,11 @@ holes = [ //format [face_name, shape_name, shape_position[x_pos,y_pos,x_offs,y_o
 	
 
 	//hole for screw post sized for "no. 2 screw" of "type AB or type Y for self tapping hard plastic resins" i.e. thread diamter 0.086"(2.184mm) hole diameter 0.094"(2.3876mm) head diamtere 0.14" 3.556mm from http://www.csgnetwork.com/screwinfo.html
-	["B", "Cylinder",	[6.5,1.5,-device_xyz[0]/2,-device_xyz[1]/2,0,"outside"],			[-2+wall_t+(1-top_bottom_ratio)*device_xyz[2]+clearance_xyz[2],3.556/2,16]		],//post in cutout
-	//["B", "Cylinder",	[8,2.7,-device_xyz[0]/2,-device_xyz[1]/2,0,"outside"],			[(1-top_bottom_ratio)*device_xyz[2]-a_bit,0.5,6]		],//post in cutout
-	//["B", "Cylinder",	[8,2.7,-device_xyz[0]/2,-device_xyz[1]/2,0,"outside"],			[3+wall_t+(1-top_bottom_ratio)*device_xyz[2]-a_bit,0.5,6]		],//post in cutout
-
+	["B", "Cylinder",	[6.5,1.5,-device_xyz[0]/2,-device_xyz[1]/2,0,"outside"],			[-2+wall_t+(1-top_bottom_ratio)*device_xyz[2]+clearance_xyz[2],3.556/2,16]		],
 	
-	//[depth, length, breadth, corner_radius, corner_sides]
 
+	// clicker hole
+	["T", "Cylinder", [-23,0, device_xyz[0]/2,0, 0, "outside"], [wall_t, 17/2, 16] ],
 
 	];
 
@@ -288,8 +286,8 @@ posts = [ //format [face_name, shape_name shape_position[x_pos,y_pos,x_offs,y_of
 	
 
 	// spring mount
-	["B", "Cylinder",	[-34,-8, device_xyz[0]/2,0, 0,"inside"], [4, 9/2, 32]],
-	["B", "Cylinder",	[-34,-8, device_xyz[0]/2,0, 0,"inside"], [12, 6/2, 32]],
+	["B", "Cylinder",	[-32,-7, device_xyz[0]/2,0, 0,"inside"], [4, 9/2, 32]],
+	["B", "Cylinder",	[-32,-7, device_xyz[0]/2,0, 0,"inside"], [12, 6/2, 32]],
 
 //		"Nub_Post" shape_size[depth, radius_bottom, radius_top, depth_nub, sides]
 //		"Dip_Post" shape_size[depth, radius_bottom, radius_top, depth_dip, sides]
@@ -301,9 +299,10 @@ text_height_big=7;
 text_height_small=3;
 text_spacing=1.1;
 text = [//recessed text on faces [face_name, text_to_write, shape_position[x_pos,y_pos,x_offs,y_offs,rotate,align], shape_size[depth,font_height,font_spacing,mirror]] Note: for silly reasons mirror must be 0 or 1 corresponding to false and true in this version
-	["T", ":D",		[0,0.5,0,0,0,"outside"], 				[text_engrave_emboss_depth,text_height_big,text_spacing,0]],
-	["T", "USB",		[18,4,0,0,270,"outside"], 			[text_engrave_emboss_depth,text_height_small,text_spacing,0]],
-    ["T", "0 1",            [18,-9,0,0,270,"outside"], [text_engrave_emboss_depth,text_height_small,text_spacing,0]],
+	["T", ":D",		[-10,0.5,0,0,0,"outside"], 				[text_engrave_emboss_depth,text_height_big,text_spacing,0]],
+	["E", "CHRG",		[0, 0, 0,0,0,"outside"], 			[text_engrave_emboss_depth,text_height_small,text_spacing,0]],
+
+    ["S", "0  1",            [device_xyz[0]/2 - 11.7, -5, 0, 0, 0,"outside"], [text_engrave_emboss_depth,text_height_small,text_spacing,0]],
 //	["S", "+X",			[10,0,0,5,0,"outside"], 			[text_engrave_emboss_depth,text_height_big,text_spacing,0]],
 //	["N", "-X",			[0,0,0,0,0,"outside"], 				[text_engrave_emboss_depth,text_height_big,text_spacing,0]],
 //	["W", "-Y",			[0,0,0,0,0,"outside"], 				[text_engrave_emboss_depth,text_height_big,text_spacing,0]],
@@ -367,8 +366,10 @@ locking_feature_max_ly=device_xyz[0]-10;//20;
 use<write.scad>;
 use<charge-controller.scad>;
 
-translate([39, -12.6, 16.2])
-	rotate([180,0,180])
+// This position only works in "bottom" layout
+if (layout == "bottom")
+	translate([39.2, 12.6, 6.5])
+	rotate([0,0,180])
 	chargeController();
 
 //******************************calls**********************//
