@@ -259,7 +259,7 @@ holes = [ //format [face_name, shape_name, shape_position[x_pos,y_pos,x_offs,y_o
 	
 
 	// clicker hole
-	["T", "Cylinder", [-23,0, device_xyz[0]/2,0, 0, "outside"], [wall_t, 17/2, 16] ],
+	["T", "Cylinder", [-23,0, device_xyz[0]/2,0, 0, "outside"], [wall_t, 17/2, 64] ],
 
 	];
 
@@ -290,7 +290,7 @@ posts = [ //format [face_name, shape_name shape_position[x_pos,y_pos,x_offs,y_of
 	["B", "Cylinder",	[-32,-7, device_xyz[0]/2,0, 0,"inside"], [12, 6/2, 32]],
 
 	// Clicker wedge
-	["T", "Wedge", [-6,0, 0,0, 180, "inside"], [1, 12, 17]],
+	["T", "Wedge", [-3.5 - 19,0, 0,0, 180, "inside"], [0.5, 12, device_xyz[1]+4]],
 	];
 //data structure defining all the engraved text used on the packaging
 text_engrave_emboss_depth=1;
@@ -366,7 +366,7 @@ use<write.scad>;
 use<charge-controller.scad>;
 
 // This position only works in "bottom" layout
-if (layout == "bottom")
+if (layout == "bottom" && has_device)
 	translate([39.2, 12.6, 6.5])
 	rotate([0,0,180])
 	chargeController();
