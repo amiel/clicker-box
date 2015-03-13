@@ -249,9 +249,9 @@ holes = [ //format [face_name, shape_name, shape_position[x_pos,y_pos,x_offs,y_o
 	["S", "Round_Rect", [10, 14, -device_xyz[0]/2 - wall_t + 5, -device_xyz[1]/2 - wall_t + 6.5, 0, "outside"], [wall_t+3, 10, 4.5, 1, 3]	 ],
 
 //cutout for uUSB metal plug#uUSB spec is 6.85*1.8, measured at ~7*2.1, seems to be roughly centred on plugs I measured
-	["E", "Rectangle",  [0, 3+4, 0, -device_xyz[1]/2 + wall_t, 0, "inside"], [wall_t/2, 7.6, 2.7] ],
+	["E", "Rectangle",  [0, 4+4, 0, -device_xyz[1]/2 + wall_t, 0, "inside"], [wall_t/2, 7.6, 2.7] ],
 //cutout for uUSB plastic overmold plug#uUSBspec maximum overmold size of 10.6 by 8.5 mm measured at ~10.8x7mm
-	["E", "Round_Rect", [0, 3+4, 0, -device_xyz[1]/2 + wall_t, 0, "outside"], [wall_t/2 + lip_fit/2, 11.5, 8.3,1,3] ],
+	["E", "Round_Rect", [0, 4+4, 0, -device_xyz[1]/2 + wall_t, 0, "outside"], [wall_t/2 + lip_fit/2, 11.5, 8.3,1,3] ],
 	
 
 	//hole for screw post sized for "no. 2 screw" of "type AB or type Y for self tapping hard plastic resins" i.e. thread diamter 0.086"(2.184mm) hole diameter 0.094"(2.3876mm) head diamtere 0.14" 3.556mm from http://www.csgnetwork.com/screwinfo.html
