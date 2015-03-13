@@ -251,11 +251,11 @@ holes = [ //format [face_name, shape_name, shape_position[x_pos,y_pos,x_offs,y_o
 //cutout for uUSB metal plug#uUSB spec is 6.85*1.8, measured at ~7*2.1, seems to be roughly centred on plugs I measured
 	["E", "Rectangle",  [0, 3+4, 0, -device_xyz[1]/2 + wall_t, 0, "inside"], [wall_t/2, 7.6, 2.7] ],
 //cutout for uUSB plastic overmold plug#uUSBspec maximum overmold size of 10.6 by 8.5 mm measured at ~10.8x7mm
-	["E", "Round_Rect", [0, 3+4, 0, -device_xyz[1]/2 + wall_t, 0, "outside"], [wall_t/2 + lip_fit/2, 11.5, 7.7,1,3] ],
+	["E", "Round_Rect", [0, 3+4, 0, -device_xyz[1]/2 + wall_t, 0, "outside"], [wall_t/2 + lip_fit/2, 11.5, 8.3,1,3] ],
 	
 
 	//hole for screw post sized for "no. 2 screw" of "type AB or type Y for self tapping hard plastic resins" i.e. thread diamter 0.086"(2.184mm) hole diameter 0.094"(2.3876mm) head diamtere 0.14" 3.556mm from http://www.csgnetwork.com/screwinfo.html
-	["B", "Cylinder",	[6.5,1.5,-device_xyz[0]/2,-device_xyz[1]/2,0,"outside"],			[-2+wall_t+(1-top_bottom_ratio)*device_xyz[2]+clearance_xyz[2],3.556/2,16]		],
+	["B", "Cylinder",	[38,1.5,-device_xyz[0]/2,-device_xyz[1]/2,0,"outside"],			[-2+wall_t+(1-top_bottom_ratio)*device_xyz[2]+clearance_xyz[2],3.556/2,16]		],
 	
 
 	// clicker hole
@@ -275,8 +275,9 @@ posts = [ //format [face_name, shape_name shape_position[x_pos,y_pos,x_offs,y_of
 	//thread diamter 0.086"(2.184mm) hole diameter 0.094"(2.3876mm) head diameter 0.14" 3.556mm from http://www.csgnetwork.com/screwinfo.html
 
 	// Original screw hole
-	["B", "Hollow_Cylinder",	[6.5,1.5,-device_xyz[0]/2,-device_xyz[1]/2,0,"inside"],			[(1-top_bottom_ratio)*device_xyz[2]+post_tolerance-a_bit,(3.556/2)+1,(2.3876/2),16]		],//post in cutout
-	["T", "Hollow_Cylinder",	[6.5,1.5,-device_xyz[0]/2,-device_xyz[1]/2,0,"inside"],			[(top_bottom_ratio)*device_xyz[2]+post_tolerance-a_bit,(3.556/2)+1,(2/2),16]		],//post in cutout
+    // 38 gives 35mm space between the post and the end, which should be enough space for the battery
+	["B", "Hollow_Cylinder",	[38,1.5,-device_xyz[0]/2,-device_xyz[1]/2,0,"inside"],			[(1-top_bottom_ratio)*device_xyz[2]+post_tolerance-a_bit,(3.556/2)+1,(2.3876/2),16]		],//post in cutout
+	["T", "Hollow_Cylinder",	[38,1.5,-device_xyz[0]/2,-device_xyz[1]/2,0,"inside"],			[(top_bottom_ratio)*device_xyz[2]+post_tolerance-a_bit,(3.556/2)+1,(2/2),16]		],//post in cutout
 
 	
     // Charger mounts
